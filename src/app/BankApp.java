@@ -1,18 +1,27 @@
 package app;
 
-import Controller.AccountController;
+import controller.AdminController;
+import controller.CustomerController;
 import Controller.LoginController;
+import controller.TellerController;
 import dao.AccountDAO;
 import dao.CustomerDAO;
 import dao.Schema;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.*;
-import view.AccountView;
+import model.Account;
+import model.Bank;
+import model.Customer;
+import view.AdminView;
+import view.CustomerView;
 import view.LoginView;
+import view.TellerView;
 
 import java.sql.SQLException;
+
+import static model.Role.ADMINISTRATOR;
+import static model.Role.CUSTOMER;
 
 public class BankApp extends Application {
     private Stage stage;
@@ -42,28 +51,57 @@ public class BankApp extends Application {
             bank.registerCustomer(c);
             StringBuilder nums = new StringBuilder();
             for (Account a : c.getAccounts()) nums.append(a.getAccountNumber()).append(' ');
-            System.out.println(c + " : " + nums);       // handy account numbers for the demo
+            System.out.println(c + " [" + c.getUserName() + "] : " + nums);   // handy for the demo
         }
     }
 
+    // Login: each role gets its own screen
     private void showLogin() {
         LoginView loginView = new LoginView();
         LoginController loginController = new LoginController(loginView);
         loginController.setOnLoginSuccess(user -> {
-            if (user.getRole() == Role.CUSTOMER) {
-                loginView.showMessage("Customer screens are coming soon.");
-            } else {
-                showAccountScreen();
+            switch (user.getRole()) {
+                case TELLER -> showTeller();
+                case ADMINISTRATOR -> showAdmin();
+                case CUSTOMER -> {
+                    Customer customer = findCustomer(user.getUserName());
+                    if (customer == null) {
+                        loginView.showMessage("No customer profile found for this login.");
+                    } else {
+                        showCustomer(customer);
+                    }
+                }
             }
         });
         stage.setScene(new Scene(loginView, 400, 300));
     }
 
-    private void showAccountScreen() {
-        AccountView accountView = new AccountView();
-        new AccountController(accountView, bank);
-        accountView.setOnLogout(e -> showLogin());
-        stage.setScene(new Scene(accountView, 700, 550));
+    private Customer findCustomer(String username) {
+        for (Customer c : bank.getCustomers()) {
+            if (c.getUserName().equalsIgnoreCase(username)) return c;
+        }
+        return null;
+    }
+
+    private void showTeller() {
+        TellerView view = new TellerView();
+        new TellerController(view, bank);
+        view.setOnLogout(e -> showLogin());
+        stage.setScene(new Scene(view, 960, 720));
+    }
+
+    private void showCustomer(Customer customer) {
+        CustomerView view = new CustomerView();
+        new CustomerController(view, customer);
+        view.setOnLogout(e -> showLogin());
+        stage.setScene(new Scene(view, 900, 700));
+    }
+
+    private void showAdmin() {
+        AdminView view = new AdminView();
+        new AdminController(view, bank);
+        view.setOnLogout(e -> showLogin());
+        stage.setScene(new Scene(view, 900, 700));
     }
 
     public static void main(String[] args) {

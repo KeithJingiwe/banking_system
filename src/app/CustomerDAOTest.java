@@ -30,7 +30,7 @@ public class CustomerDAOTest {
                     "Pass#1234",
                     "Thabo",
                     "Molefe",
-                    "123456789",
+                    "128766789",
                     LocalDate.of(1998, 4, 12),
                     true,
                     "Plot 123, Palapye",

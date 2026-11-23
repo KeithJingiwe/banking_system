@@ -32,7 +32,9 @@ public class DataSeeder {
                 {"boitumelo", "Boitumelo", "Seretse", "210555555", "false"},
                 {"onkarabile", "Onkarabile", "Phiri", "210666666", "true"},
                 {"mpho", "Mpho", "Kgosi", "210777777", "true"},
-                {"gorata", "Gorata", "Tau", "210888888", "false"}};
+                {"gorata", "Gorata", "Tau", "210888888", "false"},
+        };
+
 
         for (int i = 0; i < people.length; i++) {
             String[] p = people[i];
