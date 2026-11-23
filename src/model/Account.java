@@ -87,6 +87,22 @@ public abstract class Account implements Transactable {
     public String getLastRejectionReason() { return lastRejectionReason; }
     public List<Transaction> getTransactions() { return Collections.unmodifiableList(transactions); }
 
+    // Used when re-loading a stored account (from the database):
+    protected Account(String accountNumber, String branch, Customer owner, LocalDate dateOpened,
+                      AccountStatus status, BigDecimal balance, List<Transaction> history) {
+        if (owner == null) {
+            throw new IllegalArgumentException("An account cannot exist without a customer.");
+        }
+        this.accountNumber = accountNumber;
+        this.branch = branch;
+        this.owner = owner;
+        this.dateOpened = dateOpened;
+        this.status = status;
+        this.balance = Money.round(balance);
+        this.transactions.addAll(history);
+    }
+
+
     @Override
     public String toString() {
         return String.format("%s [%s] Branch: %s | Balance: BWP %s | %s",

@@ -47,10 +47,12 @@ public String getTransactionID() {
     public BigDecimal getBalanceAfter() {return balanceAfter;}
     public String getDescription() {return description;}
 
+
     @Override
     public String toString() {
        return String.format("%s | %-10s | BWP %10s | Balance BWP %10s | %s",
                timestamp.format(FORMAT), type, amount, balanceAfter, description);
     }
+
 
 }

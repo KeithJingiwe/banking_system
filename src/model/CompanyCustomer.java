@@ -13,6 +13,17 @@ public class CompanyCustomer extends Customer{
 
     }
 
+    public CompanyCustomer(String customerId, String userID, String userName, String passwordHash,
+                           String companyName, String registrationNumber, String contactPerson,
+                           String address, String phone, String email,
+                           int failedAttempts, boolean locked, boolean active) {
+        super(customerId, userID, userName, passwordHash, address, phone, email,
+                failedAttempts, locked, active);
+        this.companyName = companyName;
+        this.registrationNumber = registrationNumber;
+        this.contactPerson = contactPerson;
+    }
+
     @Override
     public String getDisplayName() {return companyName;}
     public String getCompanyName() {return companyName;}

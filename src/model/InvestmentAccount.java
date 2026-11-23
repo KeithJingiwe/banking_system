@@ -1,6 +1,8 @@
 package model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 
 public class InvestmentAccount extends Account implements InterestBearing{
@@ -15,6 +17,13 @@ public class InvestmentAccount extends Account implements InterestBearing{
         }
         deposit(initialDeposit, "Opening deposit");
     }
+
+
+    public InvestmentAccount(String accountNumber, String branch, Customer owner, LocalDate dateOpened,
+                          AccountStatus status, BigDecimal balance, List<Transaction> history) {
+        super(accountNumber, branch, owner, dateOpened, status, balance, history);
+    }
+
 
     @Override
     public boolean withdraw(BigDecimal amount) { return debit(amount); }

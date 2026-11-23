@@ -93,4 +93,20 @@ public String getUserID() {return userID;}
 
     @Override
     public String toString() {return userName + " (" + role + ")";}
+
+    // when re-loading a stored user (from the database)
+    public User(String userID, String userName, String passwordHash, Role role,
+                String address, String phone, String email,
+                int failedAttempts, boolean locked, boolean active) {
+        this.userID = userID;
+        this.userName = userName;
+        this.passwordHash = passwordHash;
+        this.role = role;
+        this.address = address;
+        this.phone = phone;
+        this.email = email;
+        this.failedAttempts = failedAttempts;
+        this.locked = locked;
+        this.active = active;
+    }
 }

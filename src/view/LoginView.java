@@ -9,6 +9,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import model.User;
+
+import java.util.function.Consumer;
 
 public class LoginView extends GridPane {
   private final TextField usernameField = new TextField();
@@ -16,13 +19,17 @@ public class LoginView extends GridPane {
   private final Button loginButton = new Button("Login");
   private final Label messageLabel = new Label();
 
+  private Consumer<User> onLoginSuccess;
+
+  public void setOnLoginSuccess(Consumer<User> handler) { this.onLoginSuccess = handler; }
+
   public LoginView() {
     setAlignment(Pos.CENTER);
     setHgap(10);
     setVgap(12);
     setPadding(new Insets(30));
 
-    Label title = new Label("BAC Bank - Login");
+    Label title = new Label("Bank Login");
     title.setStyle("-fx-font-size: 20px; -fx-font-weight: bold;");
 
     add(title, 0, 0, 2, 1);

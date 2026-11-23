@@ -1,6 +1,8 @@
 package model;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.List;
 
 public class SavingsAccount extends Account implements InterestBearing{
  public static final double MONTHLY_RATE = 0.0005;
@@ -8,6 +10,13 @@ public class SavingsAccount extends Account implements InterestBearing{
  public SavingsAccount(String accountNumber, String branch, Customer owner) {
      super(accountNumber, branch, owner);
  }
+
+
+    public SavingsAccount(String accountNumber, String branch, Customer owner, LocalDate dateOpened,
+                          AccountStatus status, BigDecimal balance, List<Transaction> history) {
+        super(accountNumber, branch, owner, dateOpened, status, balance, history);
+    }
+
 
  @Override
  public boolean withdraw(BigDecimal amount) {

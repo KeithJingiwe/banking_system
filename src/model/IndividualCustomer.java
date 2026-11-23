@@ -20,6 +20,19 @@ public class IndividualCustomer extends Customer {
         this.employed = employed;
     }
 
+    public IndividualCustomer(String customerId, String userID, String userName, String passwordHash,
+                              String firstName, String surname, String omangNumber, LocalDate dateOfBirth,
+                              boolean employed, String address, String phone, String email,
+                              int failedAttempts, boolean locked, boolean active) {
+        super(customerId, userID, userName, passwordHash, address, phone, email,
+                failedAttempts, locked, active);
+        this.firstName = firstName;
+        this.surname = surname;
+        this.omangNumber = omangNumber;
+        this.dateOfBirth = dateOfBirth;
+        this.employed = employed;
+    }
+
     @Override
     public String getDisplayName() { return firstName + " " + surname; }
 

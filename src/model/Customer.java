@@ -18,7 +18,7 @@ public abstract class Customer extends User {
 
     public List<Account> getAccounts() { return Collections.unmodifiableList(accounts); }
 
-    private final String customerId;
+    private String customerId;
 
     protected Customer(String username, String password, String address, String phone, String email) {
 
@@ -31,6 +31,15 @@ public abstract class Customer extends User {
 
     public abstract String getDisplayName();
     public String getCustomerId() {return customerId;}
+
+    // Used when re-loading a stored customer (from the database)
+    protected Customer(String customerId, String userID, String userName, String passwordHash,
+                       String address, String phone, String email,
+                       int failedAttempts, boolean locked, boolean active) {
+        super(userID, userName, passwordHash, Role.CUSTOMER, address, phone, email,
+                failedAttempts, locked, active);
+        this.customerId = customerId;
+    }
 
     @Override
     public String toString() {return getDisplayName() + " [" + customerId + "]";}
